@@ -1,0 +1,2 @@
+rootProject.name='PaintMe Android Program'
+include ':app'
