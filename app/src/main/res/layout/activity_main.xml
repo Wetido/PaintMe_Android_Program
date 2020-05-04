@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <com.example.paintmeandroidprogram.DrawableSurface
+            android:id="@+id/drawable_surface"
+            android:layout_width="match_parent"
+            android:layout_height="447dp" />
+
+        <com.michaldrabik.tapbarmenulib.TapBarMenu
+            android:id="@+id/tapBarMenu"
+            android:layout_width="match_parent"
+            android:layout_height="74dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0dp"
+            android:background="#fff8efe0"
+            android:gravity="bottom">
+
+            <ImageView
+                android:id="@+id/item1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:src="@drawable/custom" />
+
+            <Space
+                android:layout_width="56dp"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/item2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:src="@drawable/square" />
+
+            <Space
+                android:layout_width="56dp"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/item3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:src="@drawable/circle" />
+
+            <Space
+                android:layout_width="56dp"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/item4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:src="@drawable/picker"/>
+
+        </com.michaldrabik.tapbarmenulib.TapBarMenu>
+    </LinearLayout>
+
+
+</LinearLayout>

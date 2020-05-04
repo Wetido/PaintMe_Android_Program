@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private TapBarMenu tapBarMenu;
     private ImageView linearDraw;
     private ImageView squareDraw;
+    private ImageView circleDraw;
     private ImageView colorPicker;
     DrawableSurface drawable_surface;
 
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         tapBarMenu = findViewById(R.id.tapBarMenu);
         linearDraw = findViewById(R.id.item1);
         squareDraw = findViewById(R.id.item2);
-        colorPicker = findViewById(R.id.item3);
+        circleDraw = findViewById(R.id.item3);
+        colorPicker = findViewById(R.id.item4);
 
 
         tapBarMenu.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +63,15 @@ public class MainActivity extends AppCompatActivity {
                 drawable_surface.setMode(1);
             }
         });
+
+        circleDraw.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+
+                tapBarMenu.close();
+                drawable_surface.setMode(2);
+            }
+        });
+
 
         colorPicker.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
