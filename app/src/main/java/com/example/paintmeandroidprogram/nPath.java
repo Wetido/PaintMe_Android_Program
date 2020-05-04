@@ -2,10 +2,11 @@ package com.example.paintmeandroidprogram;
 
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PointF;
 
 import androidx.annotation.Nullable;
 
-public class nPath extends Path {
+public class nPath extends Path implements Figure{
 
     private Paint paint;
 
@@ -22,7 +23,21 @@ public class nPath extends Path {
         this.paint = paint;
     }
 
+    @Override
     public Paint getPaint() {
         return paint;
+    }
+
+    @Override
+    public void setmCurrent(PointF mCurrent) { }
+
+    @Override
+    public PointF getmCurrent() {
+        return null;
+    }
+
+    @Override
+    public PointF getmOrigin() {
+        return null;
     }
 }

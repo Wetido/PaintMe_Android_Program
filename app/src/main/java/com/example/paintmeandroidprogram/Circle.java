@@ -3,7 +3,7 @@ package com.example.paintmeandroidprogram;
 import android.graphics.Paint;
 import android.graphics.PointF;
 
-public class Circle {
+public class Circle implements Figure{
 
     private PointF mOrigin;
     private PointF mCurrent;
@@ -17,22 +17,22 @@ public class Circle {
         paint.setColor(color);
     }
 
+    @Override
     public PointF getmOrigin() {
         return mOrigin;
     }
 
+    @Override
     public PointF getmCurrent() {
         return mCurrent;
     }
 
-    public void setmOrigin(PointF mOrigin) {
-        this.mOrigin = mOrigin;
-    }
-
+    @Override
     public void setmCurrent(PointF mCurrent) {
         this.mCurrent = mCurrent;
     }
 
+    @Override
     public Paint getPaint() {
         return paint;
     }

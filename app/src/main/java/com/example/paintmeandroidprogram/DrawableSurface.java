@@ -29,8 +29,8 @@ public class DrawableSurface extends View implements SurfaceHolder.Callback, Run
     //private HashMap<Path,Paint> mPaths = new HashMap<>();
 
 
-    private ArrayList<Object> objects = new ArrayList<>();
-    
+    private ArrayList<Figure> objects = new ArrayList<>();
+
     private Paint mBackgroundPaint;
 
 
@@ -124,27 +124,26 @@ public class DrawableSurface extends View implements SurfaceHolder.Callback, Run
 
         canvas.drawPaint(mBackgroundPaint);
 
-        for(Object obj : objects){
+        for(Figure obj : objects){
 
-            if(obj instanceof Box){
-
-                float left = Math.min( ((Box) obj).getmOrigin().x, ((Box) obj).getmCurrent().x );
-                float right = Math.max( ((Box) obj).getmOrigin().x, ((Box) obj).getmCurrent().x );
-                float top = Math.min( ((Box) obj).getmOrigin().y, ((Box) obj).getmCurrent().y );
-                float bottom = Math.max( ((Box) obj).getmOrigin().y, ((Box) obj).getmCurrent().y );
-
-                canvas.drawRect(left, top, right, bottom, ((Box) obj).getPaint() );
-            } else if (obj instanceof Circle){
-
-                float left = Math.min( ((Circle) obj).getmOrigin().x, ((Circle) obj).getmCurrent().x );
-                float right = Math.max( ((Circle) obj).getmOrigin().x, ((Circle) obj).getmCurrent().x );
-                float top = Math.min( ((Circle) obj).getmOrigin().y, ((Circle) obj).getmCurrent().y );
-                float bottom = Math.max( ((Circle) obj).getmOrigin().y, ((Circle) obj).getmCurrent().y );
-
-                canvas.drawCircle( (right + left)/2, (top + bottom)/2 , (right - left) /2 , ((Circle) obj).getPaint() );
-            } else if (obj instanceof nPath){
+            if ( obj instanceof nPath ){
 
                 canvas.drawPath((Path) obj, ((nPath) obj).getPaint());
+            } else {
+
+                float left = Math.min( obj.getmOrigin().x, obj.getmCurrent().x );
+                float right = Math.max( obj.getmOrigin().x, obj.getmCurrent().x );
+                float top = Math.min( obj.getmOrigin().y, obj.getmCurrent().y );
+                float bottom = Math.max( obj.getmOrigin().y, obj.getmCurrent().y );
+
+                if(obj instanceof Box){
+
+                    canvas.drawRect(left, top, right, bottom, obj.getPaint() );
+                } else if (obj instanceof Circle){
+
+                    canvas.drawCircle( (right + left)/2, (top + bottom)/2 , (right - left) /2 , ((Circle) obj).getPaint() );
+                }
+
             }
         }
 
