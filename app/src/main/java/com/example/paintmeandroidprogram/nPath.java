@@ -6,9 +6,11 @@ import android.graphics.PointF;
 
 import androidx.annotation.Nullable;
 
-public class nPath extends Path implements Figure{
+import java.io.Serializable;
 
-    private Paint paint;
+public class nPath extends Path implements Figure {
+
+    private transient Paint paint;
 
     public nPath(int color) {
 
@@ -16,11 +18,6 @@ public class nPath extends Path implements Figure{
         paint.setColor(color);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(20);
-    }
-
-    public nPath(@Nullable Path src, int color) {
-        super(src);
-        this.paint = paint;
     }
 
     @Override

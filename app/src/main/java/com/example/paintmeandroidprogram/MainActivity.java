@@ -8,12 +8,17 @@ import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.michaldrabik.tapbarmenulib.TapBarMenu;
+
+import java.util.ArrayList;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -26,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView squareDraw;
     private ImageView circleDraw;
     private ImageView colorPicker;
-    DrawableSurface drawable_surface;
+    private DrawableSurface drawable_surface;
+    private ArrayList<Figure> objects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +88,50 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.item) {
+
+            objects = drawable_surface.getArray();
+
+            Intent intent = new Intent(this, ElementsInspectorAcitivity.class);
+            intent.putExtra("array", objects);
+            startActivityForResult(intent, 0);
+
+        }
+        return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) { ///Reakcja na powrot z actviity
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) { ///SKAN QR
+
+            if (resultCode == RESULT_OK) {
+
+                ArrayList<Integer> toDelete = (ArrayList<Integer>) data.getSerializableExtra("arrayResult");
+                objects = drawable_surface.getArray();
+
+
+                for( int i = 0; i < toDelete.size(); i++){
+
+                    objects.remove( (int)toDelete.get(i) );
+                }
+
+                drawable_surface.setArray(objects);
+
+            }
+        }
     }
 
     void openDialog(boolean supportsAlpha){

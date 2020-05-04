@@ -52,6 +52,16 @@ public class DrawableSurface extends View implements SurfaceHolder.Callback, Run
         this.color = color;
     }
 
+    public ArrayList<Figure> getArray(){
+
+        return objects;
+    }
+
+    public void setArray( ArrayList<Figure> obj){
+
+        objects = obj;
+        invalidate();
+    }
 
     public void setMode(int mode) {
         this.mode = mode;

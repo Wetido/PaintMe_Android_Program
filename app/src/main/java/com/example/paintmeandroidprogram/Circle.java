@@ -3,11 +3,13 @@ package com.example.paintmeandroidprogram;
 import android.graphics.Paint;
 import android.graphics.PointF;
 
-public class Circle implements Figure{
+import java.io.Serializable;
 
-    private PointF mOrigin;
-    private PointF mCurrent;
-    private Paint paint;
+public class Circle implements Figure {
+
+    private transient PointF mOrigin;
+    private transient PointF mCurrent;
+    private transient Paint paint;
 
     public Circle(PointF mOrigin, int color) {
         this.mOrigin = mOrigin;

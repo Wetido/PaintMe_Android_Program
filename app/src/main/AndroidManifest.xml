@@ -7,11 +7,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="PAINT ME"
-        tools:replace="android:label"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ColorPickerActivity"></activity>
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
+        <activity android:name=".ElementsInspectorAcitivity"></activity>
+        <activity android:name=".ColorPickerActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

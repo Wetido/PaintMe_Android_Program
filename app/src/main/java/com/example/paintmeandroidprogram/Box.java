@@ -3,11 +3,13 @@ package com.example.paintmeandroidprogram;
 import android.graphics.Paint;
 import android.graphics.PointF;
 
-public class Box implements Figure{
+import java.io.Serializable;
 
-    private PointF mOrigin;
-    private PointF mCurrent;
-    private Paint paint;
+public class Box implements Figure {
+
+    private transient PointF mOrigin;
+    private transient PointF mCurrent;
+    private transient Paint paint;
 
     public Box(PointF mOrigin, int color) {
         this.mOrigin = mOrigin;
