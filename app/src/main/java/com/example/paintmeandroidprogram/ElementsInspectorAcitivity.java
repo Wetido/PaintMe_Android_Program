@@ -1,31 +1,27 @@
 package com.example.paintmeandroidprogram;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ElementsInspectorAcitivity extends AppCompatActivity  {
 
-    private ListView lv;
+    private ListView mListView;
     private ArrayList<Figure> objects;
-    private ArrayAdapter arAdapter;
+    private ArrayAdapter arrayAdapter;
     private Button button;
-    private ArrayList<Integer> toDelete;
+    private ArrayList<Integer> toDelete; ///lista elementów do usuniecia
+
+    ///Korzystamy z tablicy elementów która usuwamy później w main aktywności.
+    //Nie opierujemy na tej samej tablicy ponieważ obiekty Box nPath oraz Circle zawierają w sobie obiekty innych klas co uniemożliwia poprawną serializację
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,46 +29,46 @@ public class ElementsInspectorAcitivity extends AppCompatActivity  {
         setContentView(R.layout.activity_elements_inspector_acitivity);
 
         button = findViewById(R.id.save);
+        mListView = findViewById(R.id.listView);
 
-        Intent intent = getIntent();
-        objects = (ArrayList<Figure>) intent.getSerializableExtra("array");
-        toDelete = new ArrayList<>();
-
-        lv = findViewById(R.id.listView);
-        startLoader();
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                toDelete.add(position);
-                objects.remove(position);
-                arAdapter.notifyDataSetChanged();
-            }
-        });
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("arrayResult", toDelete);
-                setResult(RESULT_OK, resultIntent);
-                finish();
-
-            }
-        });
-
+        initIntent(); ///Pobieranie intentu (tablicy do usuwania)
+        initListView();//Inicjalizajca listView
+        setListeners();//Usstawianie listenera wysylajacego liste usunietych elementów z tablicy
 
     }
 
-    private void startLoader(){
+    private void initIntent(){
 
-        //String[] animalList = {"Lion","Tiger","Monkey","Elephant","Dog","Cat","Camel"};
+        Intent intent = getIntent();
+        objects = (ArrayList<Figure>) intent.getSerializableExtra("array"); ///pobranie zserializowanego obiektu tablicy
+        toDelete = new ArrayList<>();
 
-        arAdapter = new ArrayAdapter( getApplicationContext(), R.layout.list_table, R.id.name1,  objects  );
+    }
 
-        lv.setAdapter(arAdapter);
+    private void initListView(){
+
+        mListView.setOnItemClickListener((parent, view, position, id) -> { ///Po klikniecie na element list view
+
+            toDelete.add(position); ///Dodanie do tablicy usunietych elementów nowego elementu
+            objects.remove(position); ///Usuniecie tego elementu z tablicy (która do nas przyszła z list view)
+            arrayAdapter.notifyDataSetChanged();///"odświerenie" adaptera
+        });
+
+        arrayAdapter = new ArrayAdapter( getApplicationContext(), R.layout.list_table, R.id.name1,  objects  ); ///ustawienie adaptera
+        mListView.setAdapter(arrayAdapter);
+    }
+
+    private void setListeners(){
+
+        button.setOnClickListener(view -> {
+
+            Intent resultIntent = new Intent(); ///Wyslanie listy usunietych elementów
+            resultIntent.putExtra("arrayResult", toDelete);
+            setResult(RESULT_OK, resultIntent);
+            finish();
+
+        });
+
     }
 
 

@@ -34,11 +34,21 @@ public class MainActivity extends AppCompatActivity {
     private DrawableSurface drawable_surface;
     private ArrayList<Figure> objects;
 
+    public static final int LINE = 0;
+    public static final int BOX = 1;
+    public static final int CIRCLE = 2;
+
+
+    /*
+    Korzystam z zewnętrznych bibliotek aby stworzyć animowane menu oraz color picker
+    https://github.com/yukuku/ambilwarna - color picker
+    https://github.com/michaldrabik/TapBarMenu - menu
+    */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         drawable_surface = findViewById(R.id.drawable_surface);
 
@@ -48,57 +58,49 @@ public class MainActivity extends AppCompatActivity {
         circleDraw = findViewById(R.id.item3);
         colorPicker = findViewById(R.id.item4);
 
-
-        tapBarMenu.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                tapBarMenu.toggle();
-            }
-        });
-
-        linearDraw.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                tapBarMenu.close();
-                drawable_surface.setMode(0);
-            }
-        });
-
-        squareDraw.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-
-                tapBarMenu.close();
-                drawable_surface.setMode(1);
-            }
-        });
-
-        circleDraw.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-
-                tapBarMenu.close();
-                drawable_surface.setMode(2);
-            }
-        });
-
-
-        colorPicker.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-
-                openDialog(true);
-                tapBarMenu.close();
-
-            }
-        });
+        setListeners();
 
     }
 
+    void setListeners(){
+
+        tapBarMenu.setOnClickListener(v -> tapBarMenu.toggle()); ///Domyslny listner
+
+        linearDraw.setOnClickListener(v -> { ///Listeren rysowania linii
+            tapBarMenu.close();
+            drawable_surface.setMode(LINE);
+        });
+
+        squareDraw.setOnClickListener(v -> { ///Listeren rysowania kwadratu
+
+            tapBarMenu.close();
+            drawable_surface.setMode(BOX);
+        });
+
+        circleDraw.setOnClickListener(v -> {  ///Listener rysowania koła
+
+            tapBarMenu.close();
+            drawable_surface.setMode(CIRCLE);
+        });
+
+
+        colorPicker.setOnClickListener(v -> { ///Listeren color pickera
+
+            openDialog(true);
+            tapBarMenu.close();
+
+        });
+    }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {     ///Dodanie menu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {   ///Start nowego activity do którego wysyłana jest lista utworzonych obiektów
 
         if (item.getItemId() == R.id.item) {
 
@@ -119,22 +121,21 @@ public class MainActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
 
-                ArrayList<Integer> toDelete = (ArrayList<Integer>) data.getSerializableExtra("arrayResult");
+                ArrayList<Integer> toDelete = (ArrayList<Integer>) data.getSerializableExtra("arrayResult");    ///Pobieramy liste usuniętych obiektów
                 objects = drawable_surface.getArray();
 
+                for( int i = 0; i < toDelete.size(); i++){  ///Usuwamy elementy z listy
 
-                for( int i = 0; i < toDelete.size(); i++){
-
-                    objects.remove( (int)toDelete.get(i) );
+                    objects.remove( (int)toDelete.get(i) ); ///Musimy rzutować na int ponieważ chcemy usunać element listy składającej się z Integerów a nie obiekt
                 }
 
-                drawable_surface.setArray(objects);
+                drawable_surface.setArray(objects); ///Zastępujemy listę nową listą pozbawioną elementów
 
             }
         }
     }
 
-    void openDialog(boolean supportsAlpha){
+    void openDialog(boolean supportsAlpha){ ///Otworzenie color pickera
 
         AmbilWarnaDialog dialog = new AmbilWarnaDialog(MainActivity.this,  0x0000ff  , supportsAlpha, new AmbilWarnaDialog.OnAmbilWarnaListener() {
 
