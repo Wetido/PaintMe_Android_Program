@@ -26,14 +26,11 @@ public class DrawableSurface extends View implements SurfaceHolder.Callback, Run
     public static final int BOX = 1;
     public static final int CIRCLE = 2;
 
-
     private ArrayList<Figure> objects = new ArrayList<>(); ///Tablica obiektów
-
     private Paint mBackgroundPaint;
 
 
     public DrawableSurface(Context context){
-
         this(context, null);
     }
 
@@ -46,17 +43,14 @@ public class DrawableSurface extends View implements SurfaceHolder.Callback, Run
     }
 
     public void setColor(int color){
-
         this.color = color;
     }
 
     public ArrayList<Figure> getArray(){
-
         return objects;
     }
 
     public void setArray( ArrayList<Figure> obj){   ///podmiana tablicy
-
         objects = obj;
         invalidate();
     }
@@ -150,29 +144,20 @@ public class DrawableSurface extends View implements SurfaceHolder.Callback, Run
 
                     canvas.drawCircle( (right + left)/2, (top + bottom)/2 , (right - left) /2 , obj.getPaint() );
                 }
-
             }
         }
-
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder surfaceHolder) {
-
-    }
+    public void surfaceCreated(SurfaceHolder surfaceHolder) { }
 
     @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
-    }
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) { }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-    }
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) { }
 
 
     @Override
-    public void run() {
-
-    }
+    public void run() { }
 }

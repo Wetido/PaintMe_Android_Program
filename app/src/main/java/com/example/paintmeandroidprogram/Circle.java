@@ -1,10 +1,13 @@
 package com.example.paintmeandroidprogram;
 
+import android.annotation.SuppressLint;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.os.Parcel;
 
 import java.io.Serializable;
 
+@SuppressLint("ParcelCreator")
 public class Circle implements Figure {
 
     private transient PointF mOrigin;
@@ -39,4 +42,28 @@ public class Circle implements Figure {
         return paint;
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    }
+
+    protected Circle(Parcel in) {
+    }
+
+    public static final Creator<Circle> CREATOR = new Creator<Circle>() {
+        @Override
+        public Circle createFromParcel(Parcel source) {
+            return new Circle(source);
+        }
+
+        @Override
+        public Circle[] newArray(int size) {
+            return new Circle[size];
+        }
+    };
 }

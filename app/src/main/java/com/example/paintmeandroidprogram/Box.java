@@ -1,9 +1,10 @@
 package com.example.paintmeandroidprogram;
 
+
+import android.annotation.SuppressLint;
 import android.graphics.Paint;
 import android.graphics.PointF;
-
-import java.io.Serializable;
+import android.os.Parcel;
 
 public class Box implements Figure {
 
@@ -37,4 +38,28 @@ public class Box implements Figure {
     @Override
     public Paint getPaint() { return paint; }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    }
+
+    protected Box(Parcel in) {
+    }
+
+    public static final Creator<Box> CREATOR = new Creator<Box>() {
+        @Override
+        public Box createFromParcel(Parcel source) {
+            return new Box(source);
+        }
+
+        @Override
+        public Box[] newArray(int size) {
+            return new Box[size];
+        }
+    };
 }

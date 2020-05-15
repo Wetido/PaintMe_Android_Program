@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView squareDraw;
     private ImageView circleDraw;
     private ImageView colorPicker;
-    private DrawableSurface drawable_surface;
-    private ArrayList<Figure> objects;
+    private DrawableSurface drawable_surface; ///Nasz powierzchnia do rysowania
+    private ArrayList<Figure> objects;  ///Lista narysowany obiektów
 
     public static final int LINE = 0;
     public static final int BOX = 1;
@@ -59,7 +60,18 @@ public class MainActivity extends AppCompatActivity {
         colorPicker = findViewById(R.id.item4);
 
         setListeners();
+    }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {  //Zapis danych przed wywołaniem onDestroy()
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("key", drawable_surface.getArray());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {  //Wczytanie danych po wywołaniu onCreate()
+        super.onRestoreInstanceState(savedInstanceState);
+        drawable_surface.setArray( savedInstanceState.getParcelableArrayList("key") );
     }
 
     void setListeners(){
@@ -104,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.item) {
 
-            objects = drawable_surface.getArray();
+            ArrayList<Figure> objects = drawable_surface.getArray();///Pobieramy liste obiektów z naszego drugiego activity
 
             Intent intent = new Intent(this, ElementsInspectorAcitivity.class);
             intent.putExtra("array", objects);
@@ -121,15 +133,16 @@ public class MainActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
 
-                ArrayList<Integer> toDelete = (ArrayList<Integer>) data.getSerializableExtra("arrayResult");    ///Pobieramy liste usuniętych obiektów
-                objects = drawable_surface.getArray();
+                ArrayList<Integer> toDelete = (ArrayList<Integer>) data.getSerializableExtra("arrayResult");    ///Pobieramy liste elem do usuniecia
+                ArrayList<Figure> objects = drawable_surface.getArray(); ///Pobieramy liste obiektów z naszego drugiego activity
 
                 for( int i = 0; i < toDelete.size(); i++){  ///Usuwamy elementy z listy
 
                     objects.remove( (int)toDelete.get(i) ); ///Musimy rzutować na int ponieważ chcemy usunać element listy składającej się z Integerów a nie obiekt
                 }
-
                 drawable_surface.setArray(objects); ///Zastępujemy listę nową listą pozbawioną elementów
+
+                Toast.makeText(getApplicationContext(), "Elementy zostaly usuniete", Toast.LENGTH_LONG).show();
 
             }
         }

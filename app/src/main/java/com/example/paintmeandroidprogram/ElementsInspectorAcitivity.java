@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -35,12 +36,14 @@ public class ElementsInspectorAcitivity extends AppCompatActivity  {
         initListView();//Inicjalizajca listView
         setListeners();//Usstawianie listenera wysylajacego liste usunietych elementów z tablicy
 
+        Toast.makeText(getApplicationContext(), "Kliknij element na liscie aby usunac obiekt", Toast.LENGTH_LONG).show();
+
     }
 
     private void initIntent(){
 
         Intent intent = getIntent();
-        objects = (ArrayList<Figure>) intent.getSerializableExtra("array"); ///pobranie zserializowanego obiektu tablicy
+        objects = intent.getParcelableArrayListExtra("array"); ///pobranie zserializowanego obiektu tablicy
         toDelete = new ArrayList<>();
 
     }
